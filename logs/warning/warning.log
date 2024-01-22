@@ -2687,3 +2687,21 @@ WARNING 2024-01-17 03:20:15,145 log Bad Request: /token/refresh/
 WARNING 2024-01-17 03:20:15,149 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
 WARNING 2024-01-17 03:33:30,410 log Bad Request: /token/refresh/
 WARNING 2024-01-17 03:33:30,415 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-17 17:42:43,693 log Forbidden: /table_update/554/
+WARNING 2024-01-17 17:42:43,705 basehttp "PATCH /table_update/554/?application=common&model=SettingMenus HTTP/1.1" 403 63
+WARNING 2024-01-17 17:43:20,987 log Bad Request: /token/refresh/
+WARNING 2024-01-17 17:43:20,993 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-17 17:43:30,947 log Not Found: /favicon.ico
+WARNING 2024-01-17 17:43:30,950 basehttp "GET /favicon.ico HTTP/1.1" 404 8157
+WARNING 2024-01-17 18:34:14,878 log Not Found: /serialized_table/common/Appmodels
+WARNING 2024-01-17 18:34:14,886 basehttp "GET /serialized_table/common/Appmodels?page=9&page_size=50 HTTP/1.1" 404 26
+WARNING 2024-01-18 23:04:11,644 log Bad Request: /token/refresh/
+WARNING 2024-01-18 23:04:11,772 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-18 23:21:54,797 log Bad Request: /token/refresh/
+WARNING 2024-01-18 23:21:54,822 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-22 05:39:23,876 log Bad Request: /token/refresh/
+WARNING 2024-01-22 05:39:23,907 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-22 05:50:00,913 log Bad Request: /token/refresh/
+WARNING 2024-01-22 05:50:00,919 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-22 09:18:47,474 log Bad Request: /token/refresh/
+WARNING 2024-01-22 09:18:47,529 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
