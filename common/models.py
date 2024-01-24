@@ -131,44 +131,50 @@ def create_audit_log_on_save(sender, instance, created, **kwargs):
     if sender in excluded_models:
         return
 
-    print("♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠")
-    print(sender)
-    # Clear chaches
-    cache.client.delete_pattern('settings_serialized_model_*')
-    if sender == SettingMenus:
-        cache.client.delete_pattern('setting_table_index_view_set_retrieve_*')
-    if sender == AppModels:
-        cache.client.delete_pattern('*table_title*')
+    try:
+        print("♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠")
+        print(sender)
+        # Clear chaches
+        cache.client.delete_pattern('settings_serialized_model_*')
+        if sender == SettingMenus:
+            cache.client.delete_pattern('setting_table_index_view_set_retrieve_*')
+        if sender == AppModels:
+            cache.client.delete_pattern('*table_title*')
 
-    if created:
-        action = "Created"
-    else:
-        action = "Updated"
+        if created:
+            action = "Created"
+        else:
+            action = "Updated"
 
-    user = instance if hasattr(instance, 'is_authenticated') and instance.is_authenticated else None
-    AuditLog.objects.create(
-        user=user,
-        action=action,
-        content_type=ContentType.objects.get_for_model(sender),
-        object_id=instance.id,
-    )
+        user = instance if hasattr(instance, 'is_authenticated') and instance.is_authenticated else None
+        AuditLog.objects.create(
+            user=user,
+            action=action,
+            content_type=ContentType.objects.get_for_model(sender),
+            object_id=instance.id,
+        )
+    except:
+        print(f"ContentType does not exist for model {sender}")
 
 @receiver(pre_delete)
 def create_audit_log_on_delete(sender, instance, **kwargs):
     if sender == AuditLog or sender == MyCounter or sender == Session:
         return
 
-    action = "Deleted"
+    try:
+        action = "Deleted"
 
-    user = instance if hasattr(instance, 'is_authenticated') and instance.is_authenticated else None
+        user = instance if hasattr(instance, 'is_authenticated') and instance.is_authenticated else None
 
-    AuditLog.objects.create(
-        user=user,
-        action=action,
-        content_type=ContentType.objects.get_for_model(sender),
-        object_id=instance.id,
-    )
-
+        AuditLog.objects.create(
+            user=user,
+            action=action,
+            content_type=ContentType.objects.get_for_model(sender),
+            object_id=instance.id,
+        )
+    except:
+        print(f"ContentType does not exist for model {sender}")
+        
 
 def validate_model_name(app_name, value):
     if app_name and value:

@@ -2705,3 +2705,15 @@ WARNING 2024-01-22 05:50:00,913 log Bad Request: /token/refresh/
 WARNING 2024-01-22 05:50:00,919 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
 WARNING 2024-01-22 09:18:47,474 log Bad Request: /token/refresh/
 WARNING 2024-01-22 09:18:47,529 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-22 12:25:09,922 log Bad Request: /token/refresh/
+WARNING 2024-01-22 12:25:09,935 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-22 20:05:53,439 log Bad Request: /token/refresh/
+WARNING 2024-01-22 20:05:53,513 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-22 20:08:15,840 log Not Found: /favicon.ico
+WARNING 2024-01-22 20:08:15,845 basehttp "GET /favicon.ico HTTP/1.1" 404 8157
+WARNING 2024-01-22 20:15:09,831 log Bad Request: /token/refresh/
+WARNING 2024-01-22 20:15:09,834 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-22 20:15:26,391 log Bad Request: /token/refresh/
+WARNING 2024-01-22 20:15:26,394 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
+WARNING 2024-01-24 21:26:32,562 log Bad Request: /token/refresh/
+WARNING 2024-01-24 21:26:32,585 basehttp "POST /token/refresh/ HTTP/1.1" 400 23
