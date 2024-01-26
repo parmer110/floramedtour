@@ -3,6 +3,7 @@
 .env
 env/
 **.log
+logs/
 **logs/
 db.sqlite3
 **.tar
