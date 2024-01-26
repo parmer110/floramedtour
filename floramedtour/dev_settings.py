@@ -1,15 +1,9 @@
 from floramedtour.settings import *
 
 DEVELOPMENT_MODE = True
-VERSION = "2.0.0"
 
+STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
 
-
-
-
-
-"""
-Version:
-2.0.0: revived after disaster entire root deletion with my wife's moral, psychological and emotional support.
-"""
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

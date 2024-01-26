@@ -521,8 +521,10 @@ def login_view(request):
 
 @check_token(redirect_field_name='next', login_url='/login/')
 def logout_view(request):
+    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
     if request.method != "POST":
         return HttpResponseNotAllowed(['POST'])
+    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
     blacklist_token(request)
     request.session.flush()
     response = redirect(reverse('index'))
