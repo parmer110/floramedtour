@@ -3,10 +3,29 @@ import os
 from datetime import timedelta
 from dotenv import load_dotenv
 import dj_database_url
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
 from .logging_setup import LOGGING
 
 DEVELOPMENT_MODE = True
 VERSION = "2.0.0"
+
+def load_private_key(file_path):
+    with open(file_path, "rb") as key_file:
+        private_key = serialization.load_pem_private_key(
+            key_file.read(),
+            password=None,
+            backend=default_backend()
+        )
+    return private_key
+
+def load_public_key(file_path):
+    with open(file_path, "rb") as key_file:
+        public_key = serialization.load_pem_public_key(
+            key_file.read(),
+            backend=default_backend()
+        )
+    return public_key
 
 load_dotenv()
 # ROOT_DIR = environ.Path(__file__) - 2
@@ -193,8 +212,14 @@ GRAPH_MODELS ={
 # ROOT_HOSTCONF = 'project.hosts'  # اسم فایل hosts.py شما
 # DEFAULT_HOST = 'www'
 
-PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
-PUBLIC_KEY = os.getenv('PUBLIC_KEY').replace('\\n', '\n')
+# PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
+# PUBLIC_KEY = os.getenv('PUBLIC_KEY').replace('\\n', '\n')
+
+# Load private key
+PRIVATE_KEY = load_private_key("private_key.pem")
+
+# Load public key
+PUBLIC_KEY = load_public_key("public_key.pem")
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=3),
