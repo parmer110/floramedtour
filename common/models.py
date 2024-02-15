@@ -1040,6 +1040,14 @@ class MyCounter(models.Model):
     value = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
 
+class Path(CommonModel):
+    url = models.URLField(null=True, blank=True, verbose_name="Website Address")
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.id}- {self.url}"
+
+
 class DynamicTableTest1(CommonModel):
     SEX = (
     ('Male', 'Male'),

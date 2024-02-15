@@ -199,10 +199,10 @@ function getMenuTrail(tag) {
     let text = tag.innerText;
     while (tag.parentElement && tag.parentElement.parentElement && tag.parentElement.parentElement.previousElementSibling) {
         tag = tag.parentElement.parentElement.previousElementSibling;
-        text = `${tag.innerText} ${text}`;
+        text = `${tag.innerText} » ${text}`;
     }
 
-    text = text.replace(tag.innerText, `${tag.innerText} »`);
+    // text = text.replace(tag.innerText, `${tag.innerText} »`);
     return text;
 }
 
@@ -2571,7 +2571,6 @@ function menusOnClick() {
         const url = tag.getAttribute('data-url');
         const holder = tag.getAttribute('data-tag');
         const option = tag.getAttribute('data-page');
-
         tag.addEventListener('click', event => {
 
             event.preventDefault();
@@ -2581,6 +2580,7 @@ function menusOnClick() {
             localStorage.setItem('first_url', url);
 
             localStorage.setItem(SESSION_ID_KEY, id);
+            console.log(`holder: ${holder}, option: ${option}`);
             SPAFrame(holder, option, url);
         });
     });

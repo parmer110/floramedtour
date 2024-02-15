@@ -1,6 +1,6 @@
 {% load custom_tags %}
 {% load permission_tags %}
-{% if menu0.parent is None and menu0.is_active == True and menu0.cat.company.name == company and nv1index == nv1index %}
+{% if menu0.parent is None and menu0.is_active == True and menu0.cat.company.name == company %}
 {% calculate 0 as val %}
 {% for permission in menu0.individual_permission.all %}
 {% if user|has_permission:permission %}
@@ -17,12 +17,11 @@
 {% endfor %}
 {% calculate as val %}
 {% if val %}
-<li class="nav-item dropdown " id="myDropdown{{ menu0.id }}">
-<a class="nav-link dropdown-toggle{% if not menu0.sub_categories.all %} menu{% endif %}" href="#" {% if not menu0.sub_categories.all %}data-tag="{{ menu0.container_tag }}" data-page="{{ menu0.path }}" data-id="{{ menu0.id }}" data-url="{{ menu0.url }}"{% endif %} data-bs-toggle="dropdown">{{ menu0.name }}</a>
+<div class="dropdown">
+<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" data-submenu>{{ menu0.name }}</button>
 {% if menu0.sub_categories.all %}
-<ul class="dropdown-menu">
     {% for menu1 in menu0.sub_categories.all|dictsort:"order" %}
-    {% if menu1.is_active == True and menu0.cat.company.name == company and nv1index == nv1index %}
+    {% if menu1.is_active == True and menu0.cat.company.name == company %}
     {% calculate 0 as val %}
     {% for permission in menu1.individual_permission.all %}
     {% if user|has_permission:permission %}
@@ -39,9 +38,9 @@
     {% endfor %}
     {% calculate as val %}    
     {% if val %}
-    <li><a class="dropdown-item{% if not menu1.sub_categories.all %} menu{% endif %}" href="#" {% if not menu1.sub_categories.all %}data-tag="{{ menu1.container_tag }}" data-page="{{ menu1.path }}" data-id="{{ menu1.id }}"{% endif %} data-url="{{ menu1.url }}">{{ menu1.name }}{% if menu1.sub_categories.all %} &raquo; {% endif %}</a>
+    <div class="dropdown {% if menu1.sub_categories.all %}dropright dropdown-submenu {% endif %}">
+    <button class="dropdown-item {% if menu1.sub_categories.all %}dropdown-toggle{% endif %}" type="button">{{ menu1.url }}</button>
     {% if menu1.sub_categories.all %}
-    <ul class="submenu dropdown-menu">
         {% for menu2 in menu1.sub_categories.all|dictsort:"order" %}
         {% if menu2.is_active == True and menu0.cat.company.name == company and nv1index == nv1index %}
         {% calculate 0 as val %}
@@ -60,9 +59,9 @@
         {% endfor %}        
         {% calculate as val %}    
         {% if val %}        
-        <li><a class="dropdown-item{% if not menu2.sub_categories.all %} menu{% endif %}" href="#" {% if not menu2.sub_categories.all %}data-tag="{{ menu2.container_tag }}" data-page="{{ menu2.path }}" data-id="{{ menu2.id }}"{% endif %} data-url="{{ menu2.url }}">{{ menu2.name }}{% if menu2.sub_categories.all %} &raquo; {% endif %}</a>
+        <div class="dropdown {% if menu2.sub_categories.all %}dropright dropdown-submenu {% endif %}">
+        <button class="dropdown-item {% if menu2.sub_categories.all %}dropdown-toggle{% endif %}" type="button">{{ menu2.url }}</button>
         {% if menu2.sub_categories.all %}
-        <ul class="submenu dropdown-menu">
             {% for menu3 in menu2.sub_categories.all|dictsort:"order" %}
             {% if menu3.is_active == True and menu0.cat.company.name == company and nv1index == nv1index %}
             {% calculate 0 as val %}
@@ -80,8 +79,9 @@
             {% endfor %}
             {% endfor %}            
             {% calculate as val %}    
-            {% if val %}            
-            <li><a class="dropdown-item{% if not menu3.sub_categories.all %} menu{% endif %}" href="#" {% if not menu3.sub_categories.all %}data-tag="{{ menu3.container_tag }}" data-page="{{ menu3.path }}" data-id="{{ menu3.id }}"{% endif %} data-url="{{ menu3.url }}">{{ menu3.name }}{% if menu3.sub_categories.all %} &raquo; {% endif %}</a>
+            {% if val %}
+            <div class="dropdown {% if menu3.sub_categories.all %}dropright dropdown-submenu {% endif %}">
+            <button class="dropdown-item {% if menu3.sub_categories.all %}dropdown-toggle{% endif %}" type="button">{{ menu3.url }}</button>
             {% if menu3.sub_categories.all %}
             <ul class="submenu dropdown-menu">
                 {% for menu4 in menu3.sub_categories.all|dictsort:"order" %}
@@ -271,24 +271,27 @@
                 {% endfor %}
             </ul>
             {% endif %}
-            </li>
+            </div>
             {% endif %}
             {% endif %}
             {% endfor %}
         </ul>
         {% endif %}
-        </li>
+        </div>
         {% endif %}
         {% endif %}
         {% endfor %}
     </ul>
     {% endif %}
-    </li>
+    </div>
     {% endif %}
     {% endif %}
     {% endfor %}
-</ul>
+{% else %}
+<div class="dropdown-menu">
+<button class="dropdown-item" type="button">                     </button>
+</div>
 {% endif %}
-</li>
+</div>
 {% endif %}
 {% endif %}

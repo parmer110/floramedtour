@@ -1,5 +1,5 @@
 from django.db import models
-from common.models import CommonModel, Person, Places, LegalEntity, JobRoles, Document
+from common.models import CommonModel, Person, Places, LegalEntity, JobRoles, Document, Path
 
 
 class Employee(CommonModel):
@@ -56,10 +56,9 @@ class Company(CommonModel):
         return f"{self.legal_entity} {self.name}"
 
 
-
 class CompanyWebsite(CommonModel):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="company_website")
-    url = models.CharField(max_length=200, unique=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="company_websites")
+    url = models.ManyToManyField(Path, related_name='company_websites')
 
     def __str__(self):
-        return self.url
+        return str(self.url)

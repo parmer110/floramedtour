@@ -1,0 +1,75 @@
+<!-- Nav Item - Pages Collapse Menu -->
+<li class="nav-item">
+    <a class="nav-link collapsed{% if menu0.sub_categories.all %} submenu-toggle{% else %} menu{% endif %}" href="#" {% if not menu0.sub_categories.all %}data-tag="{{ menu0.container_tag }}" data-page="{{ menu0.path }}" data-id="{{ menu0.id }}" data-url="{{ menu0.url }}"{% endif %}{% if menu0.sub_categories.all %}data-toggle="collapse" data-target="#collapse{{ menu0.name|slugify }}"{% endif %}
+        aria-expanded="true" aria-controls="collapse{{ menu0.name|slugify }}">
+        <i class="fa-solid {{ icon_class }}"></i>
+        <span>{{ menu0.name }}</span>
+    </a>
+    {% if menu0.sub_categories.all %}
+    <div id="collapse{{ menu0.name|slugify }}" class="collapse" aria-labelledby="heading{{ menu0.name|slugify }}" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">{{ menu0.name }} List:</h6>
+            {% for menu1 in menu0.sub_categories.all|dictsort:"order" %}
+                <a class="collapse-item submenu-toggle{% if menu1.sub_categories.all %} submenu-toggle{% else %} menu{% endif %}" href="#" {% if not menu1.sub_categories.all %}data-tag="{{ menu1.container_tag }}" data-page="{{ menu1.path }}" data-id="{{ menu1.id }}" data-url="{{ menu1.url }}"{% endif %}{% if menu1.sub_categories.all %}data-toggle="collapse" data-target="#subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}"{% endif %}
+                    aria-expanded="true" aria-controls="subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}">
+                    {{ menu1.name }}
+                    {% if menu1.sub_categories.all %}
+                        <i class="fa fa-chevron-right"></i>
+                    {% endif %}
+                </a>
+                <div id="subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}" class="collapse submenu" aria-labelledby="subHeading{{ menu0.name|slugify }}{{ menu1.name|slugify }}" data-parent="#collapse{{ menu0.name|slugify }}">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        {% for submenu2 in menu1.sub_categories.all|dictsort:"order" %}
+                            <a class="collapse-item{% if submenu2.sub_categories.all %} submenu-toggle{% else %} menu{% endif %}" href="#" {% if not submenu2.sub_categories.all %}data-tag="{{ submenu2.container_tag }}" data-page="{{ submenu2.path }}" data-id="{{ submenu2.id }}" data-url="{{ submenu2.url }}"{% endif %}{% if submenu2.sub_categories.all %}data-toggle="collapse" data-target="#subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}"{% endif %}>
+                                {{ submenu2.name }}
+                                {% if submenu2.sub_categories.all %}
+                                    <i class="fa fa-chevron-right"></i>
+                                {% endif %}
+                            </a>
+                            <div id="subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}" class="collapse submenu" aria-labelledby="subHeading{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}" data-parent="#subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    {% for submenu3 in submenu2.sub_categories.all|dictsort:"order" %}
+                                        <a class="collapse-item{% if submenu3.sub_categories.all %} submenu-toggle{% else %} menu{% endif %}" href="#" {% if not submenu3.sub_categories.all %}data-tag="{{ submenu3.container_tag }}" data-page="{{ submenu3.path }}" data-id="{{ submenu3.id }}" data-url="{{ submenu3.url }}"{% endif %}{% if submenu3.sub_categories.all %}data-toggle="collapse" data-target="#subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}{{ submenu3.name|slugify }}"{% endif %}>
+                                            {{ submenu3.name }}
+                                            {% if submenu3.sub_categories.all %}
+                                                <i class="fa fa-chevron-right"></i>
+                                            {% endif %}
+                                        </a>
+                                        <div id="subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}{{ submenu3.name|slugify }}" class="collapse submenu" aria-labelledby="subHeading{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}{{ submenu3.name|slugify }}" data-parent="#subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}">
+                                            <div class="bg-white py-2 collapse-inner rounded">
+                                                {% for submenu4 in submenu3.sub_categories.all|dictsort:"order" %}
+                                                    <a class="collapse-item{% if submenu4.sub_categories.all %} submenu-toggle{% else %} menu{% endif %}" href="#" {% if not submenu4.sub_categories.all %}data-tag="{{ submenu4.container_tag }}" data-page="{{ submenu4.path }}" data-id="{{ submenu4.id }}" data-url="{{ submenu4.url }}"{% endif %}{% if submenu4.sub_categories.all %}data-toggle="collapse" data-target="#subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}{{ submenu3.name|slugify }}{{ submenu4.name|slugify }}"{% endif %}>
+                                                        {{ submenu4.name }}
+                                                        {% if submenu4.sub_categories.all %}
+                                                            <i class="fa fa-chevron-right"></i>
+                                                        {% endif %}
+                                                    </a>
+                                                    <div id="subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}{{ submenu3.name|slugify }}{{ submenu4.name|slugify }}" class="collapse submenu" aria-labelledby="subHeading{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}{{ submenu3.name|slugify }}{{ submenu4.name|slugify }}" data-parent="#subCollapse{{ menu0.name|slugify }}{{ menu1.name|slugify }}{{ submenu2.name|slugify }}{{ submenu3.name|slugify }}">
+                                                        <div class="bg-white py-2 collapse-inner rounded">
+                                                            {% for submenu5 in submenu4.sub_categories.all|dictsort:"order" %}
+                                                                <a class="collapse-item{% if not submenu5.sub_categories.all %} menu{% endif %}" href="#" {% if not submenu5.sub_categories.all %}data-tag="{{ submenu5.container_tag }}" data-page="{{ submenu5.path }}" data-id="{{ submenu5.id }}" data-url="{{ submenu5.url }}"{% endif %}>{{ submenu5.name }}</a>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                {% empty %}
+                                                    <a class="collapse-item" href="#" {% if not menu0.sub_categories.all %}data-tag="{{ menu0.container_tag }}" data-page="{{ menu0.path }}" data-id="{{ menu0.id }}" data-url="{{ menu0.url }}"{% endif %}>{{ submenu4.name }}</a>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                        <a class="collapse-item" href="#" {% if not menu0.sub_categories.all %}data-tag="{{ menu0.container_tag }}" data-page="{{ menu0.path }}" data-id="{{ menu0.id }}" data-url="{{ menu0.url }}"{% endif %}>{{ submenu3.name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% empty %}
+                            <a class="collapse-item" href="#" {% if not menu0.sub_categories.all %}data-tag="{{ menu0.container_tag }}" data-page="{{ menu0.path }}" data-id="{{ menu0.id }}" data-url="{{ menu0.url }}"{% endif %}>{{ submenu2.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% empty %}
+                <a class="collapse-item" href="#" {% if not menu0.sub_categories.all %}data-tag="{{ menu0.container_tag }}" data-page="{{ menu0.path }}" data-id="{{ menu0.id }}" data-url="{{ menu0.url }}"{% endif %}>{{ menu1.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</li>

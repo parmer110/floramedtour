@@ -1,5 +1,6 @@
 {% extends 'common/layout.html' %}
 {% load static %}
+{% load tz %}
 {% comment %} {% load custom_filters %} {% endcomment %}
 {% block head %}
     <meta name="description" content="Medical Tourism">
@@ -176,11 +177,10 @@
     <!-- JavaScripts-->
     <script>
         const csrf_token = "{{ csrf_token }}";
-        const logoIconPic = '{% static "images/1200px-Refresh_icon.svg.png" %}'
+        const logoIconPic = '{% static "images/1200px-Refresh_icon.svg.png" %}';
     </script>
     <script type="module" src="{% static 'dist/common_index_bundle.js' %}">
     </script>
-
     <!-- Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -204,7 +204,6 @@
 {% endblock lastt %}
 
 {% block sb-admin-2 %}
-<body id="page-top">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/css/sb-admin-2.css' rel='stylesheet'>
 
     <!-- Page Wrapper -->
@@ -214,7 +213,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center menu" data-tag="section" data-page="home" data-id="" href="#">
                 <img class="img-header" src="{% static 'images/flora-logo-2.png' %}">
                 <strong>Floramedtour</strong>
             </a>
@@ -224,10 +223,26 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link menu" href="#" data-tag="section" data-page="home" data-id="">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Dashboard</span>
+                </a>
             </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                System Management
+            </div>
+            
+            <!-- Settings menu -->
+            {% for menu0 in nv1menus|dictsort:"order" %}
+                {% with icon_class="fas fa-fw fa-wrench" %}
+                    {% include "templates/submenu.html" %}
+                {% endwith %}
+            {% endfor %}        
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -237,27 +252,18 @@
                 Treatment
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Packages</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Packages List:</h6>
-                        <a class="collapse-item" href="buttons.html">PackagesTest1</a>
-                        <a class="collapse-item" href="cards.html">PackagesTest2</a>
-                    </div>
-                </div>
-            </li>
+            <!-- Nav Item - Packages Menu -->
+            {% for menu0 in nv2menus|dictsort:"order" %}
+                {% with icon_class="fa-solid fa-briefcase-medical" %}
+                    {% include "templates/submenu.html" %}
+                {% endwith %}
+            {% endfor %}        
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fa fa-book"></i>
                     <span>Plane</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -325,9 +331,9 @@
 
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+                <img class="sidebar-card-illustration mb-2" src="" alt="...">
+                <p class="text-center mb-2"><strong>FloramedTour</strong> Sidebar Message packed </p>
+                <a class="btn btn-success btn-sm" href="{% url "index" %}">Medical Tourism Agency</a>
             </div>
 
         </ul>
@@ -409,8 +415,8 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <div class="small text-gray-500">{% now "F j, Y" %}</div>
+                                        <span class="font-weight-bold">A new monthly Treatment report is ready to download!</span>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -420,7 +426,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
+                                        <div class="small text-gray-500">December 7, 2023</div>
                                         $290.29 has been deposited into your account!
                                     </div>
                                 </a>
@@ -431,7 +437,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
+                                        <div class="small text-gray-500">December 2, 2023</div>
                                         Spending Alert: We've noticed unusually high spending for your account.
                                     </div>
                                 </a>
@@ -455,31 +461,30 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                        <img class="rounded-circle" src=""
                                             alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
+                                        <div class="text-truncate">Hi there! We have wondering if you can rescue yourself throwing roule.</div>
                                         <div class="small text-gray-500">Emily Fowler · 58m</div>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                        <img class="rounded-circle" src=""
                                             alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
+                                        <div class="text-truncate">I have the surgerical photos that you ordered last month, how
                                             would you like them sent to you?</div>
                                         <div class="small text-gray-500">Jae Chun · 1d</div>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                        <img class="rounded-circle" src=""
                                             alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
@@ -491,14 +496,14 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                        <img class="rounded-circle" src=""
                                             alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                        <div class="text-truncate">Am I ok healthcare? The reason I ask is because someone
+                                            told me that people say this to all nurses, ...</div>
+                                        <div class="small text-gray-500">Clicken the Face · 2w</div>
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
@@ -511,10 +516,10 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.username }}</span>
                                 {% if prof_pic.first.image %}
                                     <img class="img-thumbnail rounded-circle user-avatar" style="width: 40px; height: 40px;" src="{{ MEDIA_URL }}{{ prof_pic.first.image }}">
                                 {% endif %}
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.username }}</span>
                                 </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -544,7 +549,20 @@
                 </nav>
                 <!-- End of Topbar -->
 
+                <!-- Settings Tables-->
+                <section class="SPA settings" style="display: none;">
+                    <h1 class="SPA_title" id="settings">Settings</h1>
+                    <div id="tables-container"></div>
+                </section> <!-- class="SPA_settings" -->
+
+                <!-- External Webpage Presentation-->
+                <article class="SPA first_present" style="display: none;">
+                    {% comment %} <h1 class="SPA_title">WebSite</h1> {% endcomment %}
+                    <div id="website_container"></div>
+                </article> <!-- class="SPA_first_present" -->
+
                 <!-- Begin Page Content -->
+                <section class="SPA home">
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
@@ -732,10 +750,10 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">Server Migration <span
-                                            class="float-right">20%</span></h4>
+                                            class="float-right">60%</span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
-                                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 60%"
+                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">Sales Tracking <span
                                             class="float-right">40%</span></h4>
@@ -839,40 +857,45 @@
                             <!-- Illustrations -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Top Package</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center">
                                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="img/undraw_posting_photo.svg" alt="...">
+                                            src="" alt="...">
                                     </div>
-                                    <p>Add some quality, svg illustrations to your project courtesy of <a
-                                            target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                        constantly updated collection of beautiful svg images that you can use
-                                        completely free and without attribution!</p>
-                                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
-                                        unDraw &rarr;</a>
+                                    <p>Nose Job in Iran <a
+                                            target="_blank" rel="nofollow" href="https://floramedtour.com/nose-job-in-iran/">Nose Job</a>, 
+                                            </p>
+                                            Facelift in Iran
+                                    <a target="_blank" rel="nofollow" href="https://floramedtour.com/facelift-in-iran/">Facelift
+                                         &rarr;</a>
                                 </div>
                             </div>
 
                             <!-- Approach -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">FloraMedTour</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-                                    <p class="mb-0">Before working with this theme, you should become familiar with the
-                                        Bootstrap framework, especially the utility classes.</p>
+                                    <p>FloraMedTour is a full-service medical tourism agency in Iran, an experienced team 
+                                        to help you discover the best medical centers that provide the highest quality of 
+                                        care for your healthcare issues. Our team provides comprehensive medical and cosmetic 
+                                        treatments solutions in a wide range of specialties (specially cosmetic surgeries) 
+                                        and offers expert care and comfort for a successful surgery. We only have partnerships 
+                                        with the best service providers in Iran, such as high-quality hospitals and clinics. 
+                                        The agency provides you with all-inclusive care, allowing you to relax and enjoy your 
+                                        medical tourism trip. from the moment you arrive at the airport in Iran, and throughout 
+                                        your stay in Iran, we will always accompany you.</p>
+                                    <p class="mb-0"> Flora Medical Tourism. </p>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-
                 </div>
+                </section>
                 <!-- /.container-fluid -->
 
             </div>
@@ -882,7 +905,8 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; <a href="mailto:parmer_110@yahoo.com">parmer_110</a> 2024</span>
+
                     </div>
                 </div>
             </footer>
@@ -935,8 +959,35 @@
     <!-- Page level custom scripts -->
     <script src="{% static 'js/sb-admin-2/chart-area-demo.js' %}"></script>
     <script src="{% static 'js/sb-admin-2/chart-pie-demo.js' %}"></script>
+    
+    <!-- Swiper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.3.1/swiper-bundle.min.js"></script>
 
+    <!-- JavaScript -->
+    <script>
+        const csrf_token = "{{ csrf_token }}";
+        const logoIconPic = '{% static "images/1200px-Refresh_icon.svg.png" %}';
+    </script>
     <script src="{% static 'js/common_layout.js' %}"></script>
-</body>
-
+    <script src="{% static 'dist/common_index_bundle.js' %}"></script>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="crossButton">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            Are you sure you want to delete this row?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelButton" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
+            </div>
+        </div>
+        </div>
+    </div>    
 {% endblock sb-admin-2 %}

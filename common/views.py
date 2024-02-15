@@ -49,7 +49,7 @@ from django.http import HttpResponseNotAllowed
 from django.contrib.contenttypes.models import ContentType
 from .tasks import fetch_related_data
 from .forms import ImageForm, Register, CustomAuthenticationForm
-from .models import Pictures, SettingMenus, User, LoginRecord, UserSession, Location, AppModels, UserProfile, UserRole
+from .models import Pictures, SettingMenus, User, LoginRecord, UserSession, Location, AppModels, UserProfile, UserRole, Path
 from administration.models import CompanyWebsite
 from .utils.tools import (
     get_app_names, has_group,
@@ -292,8 +292,7 @@ def index(request):
     
     # Countries flag        
     header_contacts = Pictures.objects.filter(image_settings__app='common', image_settings__name='cflag')
-
-    company = CompanyWebsite.objects.get(url=request.META['HTTP_HOST']).company.name 
+    company = CompanyWebsite.objects.get(url=Path.objects.get(url=request.META['HTTP_HOST'])).company.name 
     
     # All current company menus
     nv1menus = None
