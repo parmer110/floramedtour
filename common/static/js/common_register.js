@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             input.addEventListener('blur', () => {
               if (iti.isValidNumber()) {
                 input.setCustomValidity('');
+                var fullNumber = iti.getNumber(intlTelInputUtils.numberFormat.E164);
+                document.getElementById('fullNumber').value = fullNumber;
               } else {
                 input.setCustomValidity('Please enter valid phone number.');
               }

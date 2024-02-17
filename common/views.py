@@ -361,7 +361,10 @@ def index(request):
 def register(request):
     header_contacts = Pictures.objects.filter(image_settings__app='common', image_settings__name='cflag')
     if request.method == "POST":
-        form = Register(request.POST)
+        post_data = request.POST.copy()
+        post_data["mob_phone"] = post_data.get('fullNumber')
+        form = Register(post_data)
+
         # form valication checking
         if form.is_valid():
             # Attempt to register
@@ -520,10 +523,8 @@ def login_view(request):
 
 @check_token(redirect_field_name='next', login_url='/login/')
 def logout_view(request):
-    print("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑")
     if request.method != "POST":
         return HttpResponseNotAllowed(['POST'])
-    print("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓")
     blacklist_token(request)
     request.session.flush()
     response = redirect(reverse('index'))
