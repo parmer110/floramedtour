@@ -1,5 +1,6 @@
 from safedelete.models import SafeDeleteModel
 from django.contrib.auth.models import AbstractUser, Group as UserRole, Permission
+from django.contrib.auth.models import UserManager
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
@@ -294,11 +295,18 @@ class TokenLifetime(CommonModel):
     def __str__(self):
         return str(self.lifetime)
 
+
+class ActiveManagerUser(UserManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted_at__isnull=True)
+
+    def get_by_natural_key(self, username):
+        return self.get(username=username)
+    
 class User(AbstractUser, CommonModel):
+    objects = ActiveManagerUser()
     token_lifetime = models.ForeignKey(TokenLifetime, null=True, blank=True, on_delete=models.SET_NULL)
     description = models.CharField(max_length=255, null=True, blank=True, verbose_name="User Description")
-
-    objects = ActiveManager()
 
     def __str__(self):
         return self.username

@@ -232,20 +232,25 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                System Management
-            </div>
-            
-            <!-- Settings menu -->
-            {% for menu0 in nv1menus|dictsort:"order" %}
-                {% with icon_class="fas fa-fw fa-wrench" %}
-                    {% include "templates/submenu.html" %}
-                {% endwith %}
-            {% endfor %}        
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            {% if nv1menus %}
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    System Management
+                </div>
+                
+                
+                <!-- Settings menu -->
+                
+                {% for menu0 in nv1menus|dictsort:"order" %}
+                    {% with icon_class="fas fa-fw fa-wrench" %}
+                        {% include "templates/submenu.html" %}
+                    {% endwith %}
+                {% endfor %}        
+                
+                
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+            {% endif %}
 
             <!-- Heading -->
             <div class="sidebar-heading">
