@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives import serialization
 from .logging_setup import LOGGING
 
 DEVELOPMENT_MODE = True
-VERSION = "2.0.0"
+VERSION = "2.4.3"
 
 def load_private_key(file_path):
     with open(file_path, "rb") as key_file:
@@ -279,4 +279,5 @@ CORS_ALLOWED_ORIGINS = [
 """
 Version:
 2.0.0: revived after disaster entire root deletion with my wife's moral, psychological and emotional support.
+2.4.3: Debugging Register view default message context variable value.
 """
