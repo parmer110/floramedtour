@@ -290,7 +290,7 @@ def index(request):
     # Swiper pictures
     pictures = Pictures.objects.filter(image_settings__app='common', image_settings__name='swiper')
     
-    # Countries flag        
+    # Countries flag
     header_contacts = Pictures.objects.filter(image_settings__app='common', image_settings__name='cflag')
     company = CompanyWebsite.objects.get(url=Path.objects.get(url=request.META['HTTP_HOST'])).company.name 
     
@@ -360,6 +360,7 @@ def index(request):
 @throttle_classes([AnonRateThrottle])
 def register(request):
     header_contacts = Pictures.objects.filter(image_settings__app='common', image_settings__name='cflag')
+    message = ""
     if request.method == "POST":
         post_data = request.POST.copy()
         post_data["mob_phone"] = post_data.get('fullNumber')
@@ -421,6 +422,7 @@ def register(request):
     else:
         return render (request, "common/register.html", {
             "header_contacts": header_contacts,
+            "message": message,
             "form":Register()
         })
 
