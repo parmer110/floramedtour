@@ -20,28 +20,28 @@
                         <form action="{% url 'register' %}" method="POST">
                             {% csrf_token %}
                             <!-- Username -->
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 {% if form.errors.field_name %}is-invalid{% endif %}">
                                 {{ form.username }}
                             </div>
 
                             <!-- Email Address -->
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 {% if form.errors.field_name %}is-invalid{% endif %}">
                                 {{ form.email }}
                             </div>
 
                             <!-- Mobile Phone -->
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 {% if form.errors.field_name %}is-invalid{% endif %}">
                                 {{ form.mob_phone }}
                             </div>
                             <input type="hidden" id="fullNumber" name="fullNumber">
 
                             <!-- Password -->
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 {% if form.errors.field_name %}is-invalid{% endif %}">
                                 {{ form.password }}
                             </div>
 
                             <!-- Confirm Password -->
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 {% if form.errors.field_name %}is-invalid{% endif %}">
                                 {{ form.confirm_password }}
                             </div>
 

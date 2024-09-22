@@ -4,7 +4,7 @@ from django.urls import resolve, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpRequest
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpRequest, Http404
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.db import IntegrityError, models
@@ -47,6 +47,7 @@ from django.core.cache import cache
 # from celery.result import AsyncResult
 from django.http import HttpResponseNotAllowed
 from django.contrib.contenttypes.models import ContentType
+from django.utils.safestring import mark_safe
 from .tasks import fetch_related_data
 from .forms import ImageForm, Register, CustomAuthenticationForm
 from .models import Pictures, SettingMenus, User, LoginRecord, UserSession, Location, AppModels, UserProfile, UserRole, Path
@@ -292,7 +293,16 @@ def index(request):
     
     # Countries flag
     header_contacts = Pictures.objects.filter(image_settings__app='common', image_settings__name='cflag')
-    company = CompanyWebsite.objects.get(url=Path.objects.get(url=request.META['HTTP_HOST'])).company.name 
+    host = request.META['HTTP_HOST']
+    if ':' in host:
+        host = host.split(':')[0]  # Remove port part
+    try:
+        path = Path.objects.get(url=host)
+        company = CompanyWebsite.objects.get(url=path).company.name
+    except Path.DoesNotExist:
+        raise Http404("URL not found in the system")
+    except CompanyWebsite.DoesNotExist:
+        raise Http404("No company associated with this URL")    
     
     # All current company menus
     nv1menus = None
@@ -359,6 +369,13 @@ def index(request):
 @permission_classes([AllowAny])
 @throttle_classes([AnonRateThrottle])
 def register(request):
+    field_names = {
+    "mob_phone": "Mobile Phone",
+    "email": "Email Address",
+    "username": "User Name",
+    "password": "Password",
+    "confirm_password": "Cinfirmation Password",
+    }
     header_contacts = Pictures.objects.filter(image_settings__app='common', image_settings__name='cflag')
     message = ""
     if request.method == "POST":
@@ -410,14 +427,17 @@ def register(request):
                     "form": form
                 })
         else:
-            for field, errors in form.errors.items():
+            er = ""
+            for field_name, errors in form.errors.items():
+                user_friendly_name  = field_names.get(field_name, field_name)
                 for error in errors:
-                    if "Mobile number should be 14 digits." in error:
-                        error = "Mobile number should be 14 digits"
-                        break
+                    er += mark_safe(f"{error} ({user_friendly_name}) \n")
+                    # if "Mobile number should be 14 digits." in error:
+                    #    error = "Mobile number should be 14 digits"
+                    #    break
             return render(request, "common/register.html", {
                 "form": form,
-                "message": error
+                "message": er
             })
     else:
         return render (request, "common/register.html", {

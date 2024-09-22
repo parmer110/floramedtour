@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
       separateDialCode: true,
       utilsScript: utilsScript,
       nationalMode: false,
-      preferredCountries: ['us', 'gb', 'ir'],
+      preferredCountries: ['us', 'gb', 'ir']
     };
 
     fetch('/country-code/')
